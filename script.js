@@ -40,15 +40,113 @@ listEl.appendChild(li3);
 listEl.appendChild(li4);
 
 // Questions and Answers?
-var listEl = document.querySelector("#grocery-list");
-var shoppingCartEl = document.querySelector("#shopping-cart");
-var groceries = ["Bananas", "Apples", "Oranges", "Grapes", "Blueberries"];
+const start = document.getElementById("Let's Start!");
 
-listEl.addEventListener("click", function (event) {
-    event.preventDefault();
-    if (event.target.matches("button")) {
-        var item = document.createElement("div");
-        item.textContent = groceries[event.target.parentElement.id];
-        shoppingCartEl.append(item);
-    }
-});
+const quiz = document.getElementById("quiz");
+
+const question = document.getElementById("question");
+
+const counter = document.getElementById("counter");
+
+//const timeGauge = document.getElementById("timeGauge");
+
+const choiceA = document.getElementById("A");
+const choiceB = document.getElementById("B");
+const choiceC = document.getElementById("C");
+const choiceD = document.getElementById("D");
+
+const progress = document.getElementById("progress");
+
+const scoreContainer = document.getElementById("scroeContainer");
+
+let questions = [
+    {
+        question: "Who is Quark's step-father?",
+        choiceA: "Lt. Worf",
+        choiceB: "Rom",
+        choiceC: "Grand Negus Zek",
+        choiceD: "Liquidator Brunt",
+        correct: "C"
+    },
+    {
+        question: "What alien species is Lt. Worf?",
+        choiceA: "Vulcan",
+        choiceB: "Klingon",
+        choiceC: "Romulan",
+        choiceD: "Betazoid",
+        correct: "B"
+    },
+    {
+        question: "When did Captain Sisko's wife die?",
+        choiceA: "At the Battle of Wolf 359",
+        choiceB: "At their wedding",
+        choiceC: "When she became a shape-shifter",
+        choiceD: "When she lied about being human",
+        correct: "A"
+    },
+    {
+        question: "Who does Kira hate?",
+        choices: ["Dr. Bashir", "Lt. Worf", "Jadzia Dax", "Gul Dukat"],
+        correct: "D"
+    },
+];
+
+let lastQuestionIndex = questions.length - 1;
+let runningQuestionIndex = 0;
+
+var txt;
+var r = confirm("Press a button!");
+if (r == true) {
+    txt = "You pressed OK!";
+} else {
+    txt = "You pressed Cancel!";
+}
+
+function renderQuestion() {
+    let questionList = questions[runningQuestonIndex].choices.map(question) => {
+        return `<button class="answerButton" onclick="checkAnswer('${question}')">${question}</button>`
+    };
+    quiz.innerHTML = `${questions[runningQuestionIndex].question}${questionList.join("")}`
+
+}
+
+//function answerIsCorrect() {
+//document.getElementById(runningQuestionIndex).textContent
+//}
+
+var timeEl = document.querySelector(".time");
+var mainEl = document.getElementById("header");
+
+var secondsLeft = 40;
+
+function setTime() {
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timeEl.textContent = secondsLeft;
+
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval);
+            sendMessage();
+        }
+
+    }, 1000);
+}
+
+function sendMessage() {
+    timeEl.textContent = " ";
+
+    var scoreEl = document.createElement("");
+
+    //scoreEl.setAttribute("src", "images/image_1.jpg");
+    mainEl.appendChild(scoreEl);
+
+}
+function startQuiz() {
+    setTime();
+    renderQuestion();
+
+}
+
+
+
+
